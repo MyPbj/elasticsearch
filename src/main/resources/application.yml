@@ -1,0 +1,37 @@
+server:
+  port: 8190
+  servlet:
+    context-path: /
+spring:
+  application:
+    name: elasticsearch
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://rm-uf672evo2hc9qjhhgjo.mysql.rds.aliyuncs.com:3306/neteduplatform?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
+    username: xingli2018
+    password: xingli*123456
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      initial-size: 5
+      min-idle: 5
+      max-active: 20
+      max-wait: 60000
+      time-between-eviction-runs-millis: 60000
+      min-evictable-idle-time-millis: 30000
+      validation-query: SELECT 1 FROM DUAL
+      test-on-borrow: false
+      test-on-return: false
+      test-while-idle: true
+      pool-prepared-statements: true
+      max-pool-prepared-statement-per-connection-size: 20
+  elasticsearch:
+    rest:
+      uris: http://192.168.1.107:9200
+  data:
+    elasticsearch:
+      cluster-nodes: 192.168.1.107:9300
+      cluster-name: elasticsearch
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  mapper-locations: classpath:com/pbj/mapper/xml/*.xml
