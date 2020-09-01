@@ -26,10 +26,10 @@ spring:
       max-pool-prepared-statement-per-connection-size: 20
   elasticsearch:
     rest:
-      uris: http://192.168.1.107:9200
+      uris: http://192.168.3.9:9200
   data:
     elasticsearch:
-      cluster-nodes: 192.168.1.107:9300
+      cluster-nodes: 192.168.3.9:9300
       cluster-name: elasticsearch
 mybatis-plus:
   configuration:
