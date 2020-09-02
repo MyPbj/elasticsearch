@@ -1,5 +1,6 @@
 package com.pbj.service;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.pbj.pojo.EduExamqu;
 
@@ -16,4 +17,6 @@ import java.util.List;
 public interface EduExamquService extends IService<EduExamqu> {
 
     public List<EduExamqu> sync();
+
+    List<EduExamqu> setHigh(String keyword);
 }
