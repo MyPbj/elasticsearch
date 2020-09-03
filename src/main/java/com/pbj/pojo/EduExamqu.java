@@ -60,7 +60,7 @@ public class EduExamqu implements Serializable {
     /**
      * 材料主干
      */
-    @Field(type = FieldType.Text,searchAnalyzer = "ik_max_word",analyzer = "ik_max_word")
+    @Field(type = FieldType.Text,searchAnalyzer = "ik_max_word",analyzer = "ik_smart")
     //TODO
     private String material;
 
@@ -110,7 +110,7 @@ public class EduExamqu implements Serializable {
      * 章节
      */
     @TableField("unitId")
-    @Field(type = FieldType.Text,searchAnalyzer = "ik_max_word",analyzer = "ik_max_word")
+    @Field(type = FieldType.Text,searchAnalyzer = "ik_smart",analyzer = "ik_smart")
     //TODO
     private String unitId;
 
@@ -178,7 +178,7 @@ public class EduExamqu implements Serializable {
      * 知识点：2013,201323，
      */
     @TableField("knowledgeCodes")
-    @Field(type = FieldType.Text,searchAnalyzer = "ik_max_word",analyzer = "ik_max_word")
+    @Field(type = FieldType.Text,searchAnalyzer = "ik_smart",analyzer = "ik_smart")
     //TODO
     private String knowledgeCodes;
 

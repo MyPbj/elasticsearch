@@ -81,26 +81,30 @@ public class EduExamquServiceImpl extends ServiceImpl<EduExamquMapper, EduExamqu
     public List<EduExamqu> setHigh(String keyword) {
         /*查询设置*/
         BoolQueryBuilder queryBuilder= QueryBuilders.boolQuery();
+        /*条件查询*/
         queryBuilder
-                .should(QueryBuilders.matchQuery("material",keyword));
+                .should(QueryBuilders.matchQuery("material",keyword))
+                .should(QueryBuilders.matchQuery("eduExamqucontList.cont",keyword));
 //                .should(QueryBuilders.matchQuery("unitId",keyword))
 //                .should(QueryBuilders.matchQuery("knowledgeCodes",keyword));
         /*高亮设置*/
-        String preTag = "<font color='#dd4b39'>";//google的色值
+        String preTag = "<font color='#dd4b39'>";//google的色值母亲的愧疚
         String postTag = "</font>";
         HighlightBuilder highlightBuilder=new HighlightBuilder();
+        /*高亮字段设置*/
         highlightBuilder
                 .preTags(preTag)
                 .postTags(postTag)
                 .field("material")
                 .field("unitId")
+                .field("eduExamqucontList.cont")
                 .field("knowledgeCodes");
         //searchQueryBuilder 可以将多个条件组合在一起
         NativeSearchQueryBuilder searchQueryBuilder = new NativeSearchQueryBuilder();
         //高亮显示
         searchQueryBuilder.withHighlightBuilder(highlightBuilder);
         //分页显示
-        searchQueryBuilder.withPageable( PageRequest.of(0, 10000));
+        searchQueryBuilder.withPageable( PageRequest.of(1, 1));
         //查询条件
         searchQueryBuilder.withQuery(queryBuilder);
         //排序条件
@@ -145,6 +149,14 @@ public class EduExamquServiceImpl extends ServiceImpl<EduExamquMapper, EduExamqu
                             String knowledgeCodes = (String) hit.getSourceAsMap().get("knowledgeCodes");
                             examqu.setKnowledgeCodes(knowledgeCodes);
                         }
+
+                        HighlightField eduExamqucontListContHighlight = hit.getHighlightFields().get("eduExamqucontList.cont");
+                        if (eduExamqucontListContHighlight != null) {
+                            examqu.setKnowledgeCodes(eduExamqucontListContHighlight.fragments()[0].toString());
+                        } else {
+                            String eduExamqucontListContCodes = (String) hit.getSourceAsMap().get("eduExamqucontList.cont");
+                            examqu.setKnowledgeCodes(eduExamqucontListContCodes);
+                        }
                         examquList.add(examqu);
                     }
                 }
@@ -155,7 +167,10 @@ public class EduExamquServiceImpl extends ServiceImpl<EduExamquMapper, EduExamqu
                 return null;
             }
         });
-        List<EduExamqu> examquList = eduExamqus.toList();
+        List<EduExamqu> examquList=null;
+        if(eduExamqus!=null){
+            examquList = eduExamqus.toList();
+        }
         return examquList;
     }
 }
